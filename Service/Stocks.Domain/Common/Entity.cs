@@ -1,4 +1,8 @@
 ﻿namespace Stocks.Domain.Common {
+
+    /// <summary>
+    /// Represents an object which identity is based on an ID
+    /// </summary>
     public abstract class Entity {
         public virtual int Id { get; protected set; }
         public bool HasIdentity() => this.Id != default;
