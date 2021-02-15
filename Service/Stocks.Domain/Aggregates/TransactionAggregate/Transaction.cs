@@ -65,7 +65,7 @@ namespace Stocks.Domain.Aggregates.TransactionAggregate {
 
             if (account == null)
                 throw new InvalidTransactionException("The transaction requires an existing account to be related to.");
-
+            
             var timestampTime = timestamp.TimeOfDay;
             if (!IsMarketOpen(timestampTime))
                 throw new MarketClosedException();
@@ -74,12 +74,12 @@ namespace Stocks.Domain.Aggregates.TransactionAggregate {
                 // Here we could probably replace this with some kind of minimum amount of stock for each ticker.
                 throw new InvalidTransactionException("The amount of shares for a transaction cannot be less than one.");
 
-            if (sharePrice < 0)
+            if (sharePrice < 1)
                 throw new InvalidTransactionException("The share price cannot be less than one.");
 
             AccountId = account.Id;
             Timestamp = timestamp;
-            Operation = operation;
+            Operation = operation ?? throw new InvalidTransactionException("The transaction requires a valid operation.");
             Issuer = issuer;
             Shares = shares;
             SharePrice = sharePrice;
