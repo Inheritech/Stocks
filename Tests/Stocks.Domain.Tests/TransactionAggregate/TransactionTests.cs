@@ -80,10 +80,18 @@ namespace Stocks.Domain.Tests.TransactionAggregate {
         }
 
         [Test]
-        public void ConstructorThrowsWhenSharesAreNegative() {
+        public void ConstructorThrowsWhenSharesAreZeroOrLess() {
             // Arrange
             var account = new Account(10);
-            void create() => new Transaction(
+            void createZero() => new Transaction(
+                account,
+                _validTransactionTime,
+                Operation.Buy,
+                "NTFX",
+                0,
+                10
+            );
+            void createNegative() => new Transaction(
                 account,
                 _validTransactionTime,
                 Operation.Buy,
@@ -93,7 +101,8 @@ namespace Stocks.Domain.Tests.TransactionAggregate {
             );
 
             // Act/Assert
-            Assert.Throws<InvalidTransactionException>(create);
+            Assert.Throws<InvalidTransactionException>(createZero);
+            Assert.Throws<InvalidTransactionException>(createNegative);
         }
 
         [Test]
