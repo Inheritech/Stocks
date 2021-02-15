@@ -46,5 +46,37 @@ namespace Stocks.Domain.Tests.AccountAggregate {
             // Act/Assert
             Assert.Throws<InvalidAccountOperationException>(deposit);
         }
+
+        [Test]
+        public void DeductReducesTheAppropriateCashAmount() {
+            // Arrange
+            var account = new Account(20);
+
+            // Act
+            account.Deduct(10);
+
+            // Assert
+            Assert.AreEqual(20 - 10, account.Cash);
+        }
+
+        [Test]
+        public void DeductThrowsWhenAmountIsNegative() {
+            // Arrange
+            var account = new Account(20);
+            void deduct() => account.Deduct(-10);
+
+            // Act/Assert
+            Assert.Throws<InvalidAccountOperationException>(deduct);
+        }
+
+        [Test]
+        public void DeductThrowsWhenAccountBalanceIsInsufficient() {
+            // Arrange
+            var account = new Account(10);
+            void deduct() => account.Deduct(20);
+
+            // Act/Assert
+            Assert.Throws<InsufficientBalanceException>(deduct);
+        }
     }
 }
