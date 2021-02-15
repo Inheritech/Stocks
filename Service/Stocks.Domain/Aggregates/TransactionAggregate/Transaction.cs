@@ -43,7 +43,7 @@ namespace Stocks.Domain.Aggregates.TransactionAggregate {
         /// <summary>
         /// Identifier of the operation type
         /// </summary>
-        private int _operationId;
+        public int OperationId { get; protected set; }
 
         protected Transaction() {
 
@@ -94,7 +94,7 @@ namespace Stocks.Domain.Aggregates.TransactionAggregate {
 
             AccountId = account.Id;
             Timestamp = timestamp;
-            _operationId = operation.Id;
+            OperationId = operation.Id;
             Issuer = issuer;
             Shares = shares;
             SharePrice = sharePrice;

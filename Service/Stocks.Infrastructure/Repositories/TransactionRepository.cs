@@ -29,7 +29,7 @@ namespace Stocks.Infrastructure.Repositories {
                     other.AccountId == like.AccountId
                     && other.Issuer == like.Issuer
                     && other.Shares == like.Shares
-                    && other.Operation == like.Operation
+                    && other.OperationId == like.OperationId
                     && Math.Abs(EF.Functions.DateDiffSecond(other.Timestamp, like.Timestamp)) <= range.Seconds
                 );
         }
