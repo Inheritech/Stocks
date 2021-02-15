@@ -1,4 +1,5 @@
-﻿using Stocks.Domain.Common;
+﻿using Stocks.Domain.Aggregates.AccountAggregate;
+using Stocks.Domain.Common;
 using Stocks.Domain.Exceptions;
 using System;
 
@@ -8,14 +9,47 @@ namespace Stocks.Domain.Aggregates.TransactionAggregate {
     /// Stock transaction on an account.
     /// </summary>
     public class Transaction : Entity, IAggregateRoot {
+
+        /// <summary>
+        /// Identifier of the account that made this transaction.
+        /// </summary>
         public int AccountId { get; protected set; }
+
+        /// <summary>
+        /// Date and time at which the transaction occured.
+        /// </summary>
         public DateTime Timestamp { get; protected set; }
+
+        /// <summary>
+        /// Operation handled by the transaction.
+        /// </summary>
         public Operation Operation { get; protected set; }
+
+        /// <summary>
+        /// Ticker of the share issuing entity for the shares of this transaction.
+        /// </summary>
         public string Issuer { get; protected set; }
+
+        /// <summary>
+        /// Amount of shares in this transaction.
+        /// </summary>
         public int Shares { get; protected set; }
+
+        /// <summary>
+        /// Price of each share at the <see cref="Timestamp"/> of the transaction.
+        /// </summary>
         public int SharePrice { get; protected set; }
 
+        /// <summary>
+        /// Create a new transaction for the provided account.
+        /// </summary>
+        /// <param name="timestamp">Time of the transaction. Note: It must happen while the market is open.</param>
+        /// <param name="operation">Operation of the transaction.</param>
+        /// <param name="issuer">Ticker of the issuer for the related shares.</param>
+        /// <param name="shares">Amount of shares to handle in this transaction.</param>
+        /// <param name="sharePrice">Price at which to operate the shares for this transaction.</param>
         public Transaction(
+            Account account,
             DateTime timestamp,
             Operation operation,
             string issuer,
@@ -29,6 +63,9 @@ namespace Stocks.Domain.Aggregates.TransactionAggregate {
                 return time >= marketOpens && time <= marketCloses;
             }
 
+            if (account == null)
+                throw new InvalidTransactionException("The transaction requires an existing account to be related to.");
+
             var timestampTime = timestamp.TimeOfDay;
             if (!IsMarketOpen(timestampTime))
                 throw new MarketClosedException();
@@ -40,6 +77,7 @@ namespace Stocks.Domain.Aggregates.TransactionAggregate {
             if (sharePrice < 0)
                 throw new InvalidTransactionException("The share price cannot be less than one.");
 
+            AccountId = account.Id;
             Timestamp = timestamp;
             Operation = operation;
             Issuer = issuer;
