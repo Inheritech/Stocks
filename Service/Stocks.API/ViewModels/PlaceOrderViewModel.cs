@@ -2,37 +2,41 @@
 using System.Text.Json.Serialization;
 
 namespace Stocks.API.ViewModels {
-
-    /// <summary>
-    /// Information about a stock balance
-    /// </summary>
-    public class StockBalanceViewModel {
+    public class PlaceOrderViewModel {
 
         /// <summary>
-        /// Ticker of the stock for this balance.
+        /// Epoch at which the order was placed
+        /// </summary>
+        [JsonPropertyName("timestamp")]
+        [JsonProperty("timestamp")]
+        public long Timestamp { get; set; }
+
+        /// <summary>
+        /// Operation to make with this order
+        /// </summary>
+        [JsonPropertyName("operation")]
+        [JsonProperty("operation")]
+        public string Operation { get; set; }
+  
+        /// <summary>
+        /// Name of the share issuer
         /// </summary>
         [JsonPropertyName("issuer_name")]
         [JsonProperty("issuer_name")]
         public string Issuer { get; set; }
 
         /// <summary>
-        /// Amount of shares in this balance.
+        /// Total amount of shares
         /// </summary>
         [JsonPropertyName("total_shares")]
         [JsonProperty("total_shares")]
         public int TotalShares { get; set; }
 
         /// <summary>
-        /// Average price of the stocks on balance.
+        /// Price of each share
         /// </summary>
         [JsonPropertyName("share_price")]
         [JsonProperty("share_price")]
         public decimal SharePrice { get; set; }
-
-        public StockBalanceViewModel(string issuer, int totalShares, decimal sharePrice) {
-            Issuer = issuer;
-            TotalShares = totalShares;
-            SharePrice = sharePrice;
-        }
     }
 }
