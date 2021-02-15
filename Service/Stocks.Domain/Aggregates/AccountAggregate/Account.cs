@@ -33,6 +33,8 @@ namespace Stocks.Domain.Aggregates.AccountAggregate {
         /// </summary>
         /// <param name="amount">Amount to deposit.</param>
         public void Deposit(int amount) {
+            if (amount < 0)
+                throw new InvalidAccountOperationException("The amount to deposit cannot be negative.");
             Cash += amount;
         }
 
@@ -42,8 +44,11 @@ namespace Stocks.Domain.Aggregates.AccountAggregate {
         /// <param name="amount">Amount to deduct.</param>
         /// <exception cref="InsufficientBalanceException">Thrown if the current balance is not enough to cover the deduction.</exception>
         public void Deduct(int amount) {
+            if (amount < 0)
+                throw new InvalidAccountOperationException("The amount to deduct must be positive to be deducted.");
             if (Cash < amount)
                 throw new InsufficientBalanceException();
+            Cash -= amount;
         }
     }
 }
