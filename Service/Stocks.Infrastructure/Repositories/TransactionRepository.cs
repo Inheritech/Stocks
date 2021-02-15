@@ -1,6 +1,8 @@
-﻿using Stocks.Domain.Aggregates.TransactionAggregate;
+﻿using Microsoft.EntityFrameworkCore;
+using Stocks.Domain.Aggregates.TransactionAggregate;
 using Stocks.Domain.Common;
 using System;
+using System.Threading.Tasks;
 
 namespace Stocks.Infrastructure.Repositories {
     public class TransactionRepository : ITransactionRepository {
@@ -19,6 +21,17 @@ namespace Stocks.Infrastructure.Repositories {
             return _context.Transactions
                 .Add(transaction)
                 .Entity;
+        }
+
+        public async Task<Transaction> FindDuplicateOnTimeSpan(Transaction like, TimeSpan range) {
+            return await _context.Transactions
+                .FirstOrDefaultAsync(other =>
+                    other.AccountId == like.AccountId
+                    && other.Issuer == like.Issuer
+                    && other.Shares == like.Shares
+                    && other.Operation == like.Operation
+                    && Math.Abs(EF.Functions.DateDiffSecond(other.Timestamp, like.Timestamp)) <= range.Seconds
+                );
         }
     }
 }
