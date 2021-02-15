@@ -9,8 +9,8 @@ namespace Stocks.Domain.Tests.TransactionAggregate {
     [TestFixture]
     public class TransactionTests {
 
-        private static readonly DateTime _validTransactionTime = new DateTime(2021, 1, 1, 12, 0, 0);
-        private static readonly DateTime _invalidTransactionTime = new DateTime(2021, 1, 1, 0, 0, 0);
+        public static readonly DateTime ValidTransactionTime = new DateTime(2021, 1, 1, 12, 0, 0);
+        public static readonly DateTime InvalidTransactionTime = new DateTime(2021, 1, 1, 0, 0, 0);
 
         [Test]
         public void ConstructorWorksWithValidParameters() {
@@ -18,7 +18,7 @@ namespace Stocks.Domain.Tests.TransactionAggregate {
             var account = new Account(10);
             void create() => new Transaction(
                 account,
-                _validTransactionTime,
+                ValidTransactionTime,
                 Operation.Buy,
                 "NTFX",
                 1,
@@ -34,7 +34,7 @@ namespace Stocks.Domain.Tests.TransactionAggregate {
             // Arrange
             static void create() => new Transaction(
                 null,
-                _validTransactionTime,
+                ValidTransactionTime,
                 Operation.Buy,
                 "NTFX",
                 1,
@@ -51,7 +51,7 @@ namespace Stocks.Domain.Tests.TransactionAggregate {
             var account = new Account(10);
             void create() => new Transaction(
                 account,
-                _validTransactionTime,
+                ValidTransactionTime,
                 null,
                 "NTFX",
                 1,
@@ -68,7 +68,7 @@ namespace Stocks.Domain.Tests.TransactionAggregate {
             var account = new Account(10);
             void create() => new Transaction(
                 account,
-                _invalidTransactionTime,
+                InvalidTransactionTime,
                 Operation.Buy,
                 "NTFX",
                 1,
@@ -85,7 +85,7 @@ namespace Stocks.Domain.Tests.TransactionAggregate {
             var account = new Account(10);
             void createZero() => new Transaction(
                 account,
-                _validTransactionTime,
+                ValidTransactionTime,
                 Operation.Buy,
                 "NTFX",
                 0,
@@ -93,7 +93,7 @@ namespace Stocks.Domain.Tests.TransactionAggregate {
             );
             void createNegative() => new Transaction(
                 account,
-                _validTransactionTime,
+                ValidTransactionTime,
                 Operation.Buy,
                 "NTFX",
                 -1,
@@ -111,7 +111,7 @@ namespace Stocks.Domain.Tests.TransactionAggregate {
             var account = new Account(10);
             void createZero() => new Transaction(
                 account,
-                _validTransactionTime,
+                ValidTransactionTime,
                 Operation.Buy,
                 "NTFX",
                 1,
@@ -120,7 +120,7 @@ namespace Stocks.Domain.Tests.TransactionAggregate {
 
             void createNegative() => new Transaction(
                 account,
-                _validTransactionTime,
+                ValidTransactionTime,
                 Operation.Buy,
                 "NTFX",
                 1,
@@ -137,7 +137,7 @@ namespace Stocks.Domain.Tests.TransactionAggregate {
             var account = new Account(10);
             void createNull() => new Transaction(
                 account,
-                _validTransactionTime,
+                ValidTransactionTime,
                 Operation.Buy,
                 null,
                 1,
@@ -145,7 +145,7 @@ namespace Stocks.Domain.Tests.TransactionAggregate {
             );
             void createEmpty() => new Transaction(
                 account,
-                _validTransactionTime,
+                ValidTransactionTime,
                 Operation.Buy,
                 "",
                 1,
@@ -153,7 +153,7 @@ namespace Stocks.Domain.Tests.TransactionAggregate {
             );
             void createWhitespace() => new Transaction(
                 account,
-                _validTransactionTime,
+                ValidTransactionTime,
                 Operation.Buy,
                 "  ",
                 1,
