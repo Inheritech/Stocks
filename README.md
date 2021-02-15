@@ -1,6 +1,6 @@
 # Stocks.API
 
-This project is a simple stock API that allows creating an account, buying and selling any kind of stock.
+This project is a simple stocks API that allows creating an account, and mocks buying and selling any kind of stock.
 
 ## How to run
 
@@ -24,11 +24,11 @@ To start the application.
 
 If you don't want to install any build tools Docker can be used instead although in this case you have to override the database connection string forcefully since the Dockerfile uses a Linux image by default and MSSQL LocalDB is not available on the image.
 
-To run the project through Docker the following command could be executed from the root of the repository:
+To build the docker image for the project the following command should be executed from the root of the repository:
 
 `docker build -f Service/Stocks.API/Dockerfile .`
 
-And then running the generated docker image as usual.
+And then you can run the generated docker image as usual.
 
 ### Docker Compose
 
