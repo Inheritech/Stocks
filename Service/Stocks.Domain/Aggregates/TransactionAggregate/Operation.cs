@@ -24,13 +24,13 @@ namespace Stocks.Domain.Aggregates.TransactionAggregate {
         /// Obtain an operation type based on its name.
         /// </summary>
         /// <param name="name">Name of the operation</param>
-        /// <exception cref="InvalidTransactionOperationException">Thrown if the name provided is not a valid operation type.</exception>
+        /// <exception cref="InvalidTransactionOperationValueException">Thrown if the name provided is not a valid operation type.</exception>
         public static Operation FromName(string name) {
             var operation = List()
                 .SingleOrDefault(s => s.Name.Equals(name, StringComparison.CurrentCultureIgnoreCase));
 
             if (operation == null)
-                throw new InvalidTransactionOperationException(name);
+                throw new InvalidTransactionOperationValueException(name);
 
             return operation;
         }

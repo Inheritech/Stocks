@@ -14,7 +14,7 @@ namespace Stocks.Domain.Tests.TransactionAggregate {
 
 
             // Act/Assert
-            Assert.Throws<InvalidTransactionOperationException>(obtain);
+            Assert.Throws<InvalidTransactionOperationValueException>(obtain);
         }
 
     }

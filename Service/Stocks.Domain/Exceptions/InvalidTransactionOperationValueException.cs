@@ -6,7 +6,7 @@ namespace Stocks.Domain.Exceptions {
     /// Exception thrown when a specified exchange type is invalid.
     /// </summary>
     [Serializable]
-    public class InvalidTransactionOperationException : DomainException {
+    public class InvalidTransactionOperationValueException : DomainException {
 
         /// <summary>
         /// Business code violation code for this kind of exception.
@@ -18,11 +18,11 @@ namespace Stocks.Domain.Exceptions {
         /// </summary>
         private const string DefaultDescriptionFormat = "'{0}' is not a valid transaction operation.";
 
-        public InvalidTransactionOperationException(string attemptedOperation) 
+        public InvalidTransactionOperationValueException(string attemptedOperation) 
             : base(DefaultCode, string.Format(DefaultDescriptionFormat, attemptedOperation)) {
         }
 
-        public InvalidTransactionOperationException(string attemptedOperation, Exception inner) 
+        public InvalidTransactionOperationValueException(string attemptedOperation, Exception inner) 
             : base(DefaultCode, string.Format(DefaultDescriptionFormat, attemptedOperation), inner) {
         }
     }
