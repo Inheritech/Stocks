@@ -20,7 +20,7 @@ namespace Stocks.Domain.Aggregates.AccountAggregate {
         /// <summary>
         /// Current share balances for this account
         /// </summary>
-        public IReadOnlyCollection<StockBalance> ShareBalances => _shareBalances;
+        public IReadOnlyCollection<StockBalance> StockBalances => _shareBalances;
 
         // This works for a small set of balances, if hundreds of balances need to be handled it would be best
         // to handle share balances as separate related aggregates instead of part of the account aggregate

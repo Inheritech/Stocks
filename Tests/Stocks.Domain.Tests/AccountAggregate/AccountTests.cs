@@ -95,7 +95,7 @@ namespace Stocks.Domain.Tests.AccountAggregate {
             account.PlaceOrder(TransactionTests.ValidTransactionTime, Operation.Buy, issuer, shares, sharePrice);
 
             // Assert
-            var balance = account.ShareBalances.FirstOrDefault(_ => _.Issuer == issuer);
+            var balance = account.StockBalances.FirstOrDefault(_ => _.Issuer == issuer);
             Assert.NotNull(balance);
             Assert.AreEqual(shares, balance.Shares);
             Assert.AreEqual(sharePrice, balance.SharePrice);
@@ -115,7 +115,7 @@ namespace Stocks.Domain.Tests.AccountAggregate {
             account.PlaceOrder(TransactionTests.ValidTransactionTime, Operation.Sell, issuer, shares, sharePrice);
 
             // Assert
-            var balance = account.ShareBalances.FirstOrDefault(_ => _.Issuer == issuer);
+            var balance = account.StockBalances.FirstOrDefault(_ => _.Issuer == issuer);
             Assert.Null(balance);
         }
 
