@@ -32,6 +32,8 @@ namespace Stocks.API.Commands.Handlers {
             if (account == null)
                 throw new AccountNotFoundException();
 
+            var result = CreateResultFromAccount(account);
+            
             try {
                 var transaction = account.PlaceOrder(
                     request.Timestamp,
@@ -50,27 +52,26 @@ namespace Stocks.API.Commands.Handlers {
 
                 await _accounts.UnitOfWork.SaveEntitiesAsync();
                 await _transactions.UnitOfWork.SaveEntitiesAsync();
+
+                // Refresh result from updated account
+                result = CreateResultFromAccount(account);
             } catch (DomainException domainException) {
-                return CreateResultFromAccount(account, domainException.Code);
+                result.AddBusinessError(domainException.Code);
             }
 
-            return CreateResultFromAccount(account);
+            return result;
         }
 
-        private static PlaceOrderResult CreateResultFromAccount(Account account, string domainErrorCode = null) {
-            var domainErrors = new List<string>();
-
-            if (domainErrorCode != null)
-                domainErrors.Add(domainErrorCode);
-
-            return new PlaceOrderResult(
+        private static PlaceOrderResult CreateResultFromAccount(Account account) {
+            var result = new PlaceOrderResult(
                 new PlaceOrderResult.AccountOverview(
                     account.Cash,
                     account.StockBalances
                         .Select(_ => new PlaceOrderResult.AccountOverview.StockBalanceOverview(_.Issuer, _.Shares, _.SharePrice))
-                ),
-                domainErrors
+                )
             );
+
+            return result;
         }
     }
 }

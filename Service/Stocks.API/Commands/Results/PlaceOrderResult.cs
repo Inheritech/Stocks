@@ -27,7 +27,7 @@ namespace Stocks.API.Commands.Results {
 
         public AccountOverview Account { get; }
 
-        public PlaceOrderResult(AccountOverview account, IEnumerable<string> businessErrors) : base(businessErrors) {
+        public PlaceOrderResult(AccountOverview account) {
             Account = account;
         }
     }
