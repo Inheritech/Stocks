@@ -20,14 +20,14 @@ namespace Stocks.Domain.Aggregates.AccountAggregate {
         /// <summary>
         /// Current share balances for this account
         /// </summary>
-        public IReadOnlyCollection<StockBalance> StockBalances => _shareBalances;
+        public IReadOnlyCollection<StockBalance> StockBalances => _stockBalances;
 
         // This works for a small set of balances, if hundreds of balances need to be handled it would be best
         // to handle share balances as separate related aggregates instead of part of the account aggregate
-        private readonly List<StockBalance> _shareBalances;
+        private readonly List<StockBalance> _stockBalances;
 
         protected Account() {
-            _shareBalances = new List<StockBalance>();
+            _stockBalances = new List<StockBalance>();
         }
 
         /// <summary>
@@ -70,11 +70,11 @@ namespace Stocks.Domain.Aggregates.AccountAggregate {
         /// </summary>
         public Transaction PlaceOrder(DateTime timestamp, Operation operation, string issuer, int shares, decimal sharePrice) {
             var transaction = new Transaction(this, timestamp, operation, issuer, shares, sharePrice);
-            var balance = _shareBalances.FirstOrDefault(_ => _.Issuer == issuer);
+            var balance = _stockBalances.FirstOrDefault(_ => _.Issuer == issuer);
 
             if (balance is null) {
                 balance = new StockBalance(this, issuer);
-                _shareBalances.Add(balance);
+                _stockBalances.Add(balance);
             }
 
             if (operation == Operation.Buy) {
@@ -86,7 +86,7 @@ namespace Stocks.Domain.Aggregates.AccountAggregate {
             }
 
             if (balance.IsEmpty())
-                _shareBalances.Remove(balance);
+                _stockBalances.Remove(balance);
 
             return transaction;
         }
