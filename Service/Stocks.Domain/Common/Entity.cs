@@ -8,6 +8,9 @@
         public bool HasIdentity() => this.Id != default;
 
         public override bool Equals(object obj) {
+            if (obj is null)
+                return false;
+
             if (object.ReferenceEquals(this, obj))
                 return true;
 
