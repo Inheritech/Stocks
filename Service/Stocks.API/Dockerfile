@@ -7,12 +7,12 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:3.1 AS build
 WORKDIR /src
-COPY ["Stocks.API/Stocks.API.csproj", "Stocks.API/"]
-COPY ["Stocks.Domain/Stocks.Domain.csproj", "Stocks.Domain/"]
-COPY ["Stocks.Infrastructure/Stocks.Infrastructure.csproj", "Stocks.Infrastructure/"]
-RUN dotnet restore "Stocks.API/Stocks.API.csproj"
+COPY ["Service/Stocks.API/Stocks.API.csproj", "Service/Stocks.API/"]
+COPY ["Service/Stocks.Domain/Stocks.Domain.csproj", "Service/Stocks.Domain/"]
+COPY ["Service/Stocks.Infrastructure/Stocks.Infrastructure.csproj", "Service/Stocks.Infrastructure/"]
+RUN dotnet restore "Service/Stocks.API/Stocks.API.csproj"
 COPY . .
-WORKDIR "/src/Stocks.API"
+WORKDIR "/src/Service/Stocks.API"
 RUN dotnet build "Stocks.API.csproj" -c Release -o /app/build
 
 FROM build AS publish
