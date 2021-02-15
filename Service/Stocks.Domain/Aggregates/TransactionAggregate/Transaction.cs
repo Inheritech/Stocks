@@ -40,6 +40,10 @@ namespace Stocks.Domain.Aggregates.TransactionAggregate {
         /// </summary>
         public decimal SharePrice { get; protected set; }
 
+        protected Transaction() {
+
+        }
+
         /// <summary>
         /// Create a new transaction for the provided account.
         /// </summary>
