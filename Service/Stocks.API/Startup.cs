@@ -4,8 +4,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Stocks.API.Extensions;
 using Stocks.Infrastructure;
-using System;
 
 namespace Stocks.API {
     public class Startup {
@@ -20,13 +20,7 @@ namespace Stocks.API {
 
             string connectionString = Configuration.GetConnectionString("StocksDb");
 
-            services.AddDbContext<StocksContext>(options => {
-                options.UseSqlServer(connectionString, sqlOpts => {
-                    sqlOpts.MigrationsHistoryTable("_MigrationsHistory", StocksContext.DefaultSchema);
-                    sqlOpts.MigrationsAssembly(typeof(StocksContext).Assembly.GetName().Name);
-                    sqlOpts.EnableRetryOnFailure(maxRetryCount: 15, maxRetryDelay: TimeSpan.FromSeconds(30), errorNumbersToAdd: null);
-                });
-            }, ServiceLifetime.Scoped);
+            services.AddSqlDatabase<StocksContext>(connectionString, StocksContext.DefaultSchema);
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env) {
