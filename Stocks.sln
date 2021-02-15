@@ -15,6 +15,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Stocks.Domain.Tests", "Test
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Stocks.Infrastructure", "Service\Stocks.Infrastructure\Stocks.Infrastructure.csproj", "{6BEC96FB-8ACB-4788-A8D8-7FDEC0FD2327}"
 EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{46DD0DD6-18BA-466E-8EDC-CB30D12A4C7C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{36233FDA-1A1D-4CEB-BC94-A61D60D5DAF0}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -37,6 +44,10 @@ Global
 		{6BEC96FB-8ACB-4788-A8D8-7FDEC0FD2327}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6BEC96FB-8ACB-4788-A8D8-7FDEC0FD2327}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6BEC96FB-8ACB-4788-A8D8-7FDEC0FD2327}.Release|Any CPU.Build.0 = Release|Any CPU
+		{46DD0DD6-18BA-466E-8EDC-CB30D12A4C7C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{46DD0DD6-18BA-466E-8EDC-CB30D12A4C7C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{46DD0DD6-18BA-466E-8EDC-CB30D12A4C7C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{46DD0DD6-18BA-466E-8EDC-CB30D12A4C7C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

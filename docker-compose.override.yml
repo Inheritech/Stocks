@@ -1,0 +1,21 @@
+version: '3.4'
+
+services:
+  stocks-sql:
+    ports:
+      - "1433:1433"
+    environment:
+      - "ACCEPT_EULA=Y"
+      - "SA_PASSWORD=StocksDev1!"
+    volumes:
+      - stocks-mssql-data:/var/opt/mssql
+
+  stocks-api:
+    environment:
+      - DOTNET_ENVIRONMENT=Development
+      - ConnectionStrings__StocksDb=${STOCKS_DB:-Server=stocks-sql;Database=Stocks;User Id=sa;Password=StocksDev1!}
+    ports:
+      - 5101:80
+
+volumes:
+  stocks-mssql-data:

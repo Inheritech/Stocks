@@ -1,0 +1,13 @@
+version: '3.4'
+
+services:
+  stocks-sql:
+    image: mcr.microsoft.com/mssql/server:latest
+
+  stocks-api:
+    image: ${REGISTRY:-stocks}/stocks.api:${PLATFORM:-linux}-${TAG:-latest}
+    build:
+      context: .
+      dockerfile: Service/Stocks.API/Dockerfile
+    depends_on:
+      - stocks-sql
