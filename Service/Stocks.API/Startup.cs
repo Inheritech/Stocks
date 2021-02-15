@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Stocks.API.Extensions;
 using Stocks.Infrastructure;
+using MediatR;
 
 namespace Stocks.API {
     public class Startup {
@@ -21,7 +22,8 @@ namespace Stocks.API {
             string connectionString = Configuration.GetConnectionString("StocksDb");
 
             services.AddSqlDatabase<StocksContext>(connectionString, StocksContext.DefaultSchema)
-                .AddDomainRepositories<StocksContext>();
+                .AddDomainRepositories<StocksContext>()
+                .AddMediatR(typeof(Startup));
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env) {
