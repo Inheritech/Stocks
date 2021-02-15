@@ -77,11 +77,11 @@ namespace Stocks.Domain.Aggregates.AccountAggregate {
             }
 
             if (operation == Operation.Buy) {
-                balance.AddShares(shares, sharePrice);
                 Deduct(transaction.GetTotalPrice());
+                balance.AddShares(shares, sharePrice);
             } else {
-                balance.SubtractShares(transaction.Shares);
                 Deposit(transaction.GetTotalPrice());
+                balance.SubtractShares(transaction.Shares);
             }
 
             if (!balance.HasIdentity() && !balance.IsEmpty())
