@@ -40,6 +40,11 @@ namespace Stocks.Domain.Aggregates.TransactionAggregate {
         /// </summary>
         public decimal SharePrice { get; protected set; }
 
+        /// <summary>
+        /// Identifier of the operation type
+        /// </summary>
+        private int _operationId;
+
         protected Transaction() {
 
         }
@@ -70,6 +75,9 @@ namespace Stocks.Domain.Aggregates.TransactionAggregate {
             if (account == null)
                 throw new InvalidTransactionException("The transaction requires an existing account to be related to.");
             
+            if (operation == null)
+                throw new InvalidTransactionException("The transaction requires a valid operation.");
+
             if (string.IsNullOrWhiteSpace(issuer))
                 throw new InvalidTransactionException("The transaction requires a valid non-empty issuer.");
 
@@ -86,7 +94,7 @@ namespace Stocks.Domain.Aggregates.TransactionAggregate {
 
             AccountId = account.Id;
             Timestamp = timestamp;
-            Operation = operation ?? throw new InvalidTransactionException("The transaction requires a valid operation.");
+            _operationId = operation.Id;
             Issuer = issuer;
             Shares = shares;
             SharePrice = sharePrice;

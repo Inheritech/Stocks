@@ -30,7 +30,8 @@ namespace Stocks.Infrastructure.EntityConfigurations {
             builder.Property(_ => _.Shares);
             builder.Property(_ => _.SharePrice);
             builder.HasOne(_ => _.Operation)
-                .WithMany();
+                .WithMany()
+                .HasForeignKey("_operationId");
         }
     }
 }
