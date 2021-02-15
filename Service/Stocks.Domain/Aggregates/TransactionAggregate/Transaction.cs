@@ -87,5 +87,10 @@ namespace Stocks.Domain.Aggregates.TransactionAggregate {
             Shares = shares;
             SharePrice = sharePrice;
         }
+
+        /// <summary>
+        /// Get the total price of this transaction.
+        /// </summary>
+        public int GetTotalPrice() => Shares * SharePrice;
     }
 }
