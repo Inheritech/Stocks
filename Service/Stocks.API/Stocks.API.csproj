@@ -4,6 +4,11 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <UserSecretsId>7e25e6c3-c69c-43a6-b6cc-8729c0a601fc</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>bin\$(Configuration)\$(AssemblyName).xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
@@ -17,6 +22,7 @@
     <PackageReference Include="Polly" Version="7.2.1" />
     <PackageReference Include="Scrutor" Version="3.3.0" />
     <PackageReference Include="Serilog.AspNetCore" Version="3.4.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.0.5" />
   </ItemGroup>
 
   <ItemGroup>

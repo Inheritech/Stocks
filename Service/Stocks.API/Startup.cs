@@ -23,7 +23,8 @@ namespace Stocks.API {
 
             services.AddSqlDatabase<StocksContext>(connectionString, StocksContext.DefaultSchema)
                 .AddDomainRepositories<StocksContext>()
-                .AddMediatR(typeof(Startup));
+                .AddMediatR(typeof(Startup))
+                .AddSwaggerGen();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env) {
@@ -33,9 +34,14 @@ namespace Stocks.API {
 
             app.UseHttpsRedirection();
 
+            app.UseSwagger();
+            app.UseSwaggerUI(c => {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Edge API V1");
+            });
             app.UseRouting();
 
             app.UseEndpoints(endpoints => {
+                endpoints.MapDefaultControllerRoute();
                 endpoints.MapControllers();
             });
         }
