@@ -1,5 +1,9 @@
-﻿using Stocks.Domain.Common;
+﻿using Stocks.Domain.Aggregates.TransactionAggregate;
+using Stocks.Domain.Common;
 using Stocks.Domain.Exceptions;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Stocks.Domain.Aggregates.AccountAggregate {
 
@@ -13,7 +17,17 @@ namespace Stocks.Domain.Aggregates.AccountAggregate {
         /// </summary>
         public int Cash { get; protected set; }
 
+        /// <summary>
+        /// Current share balances for this account
+        /// </summary>
+        public IReadOnlyCollection<StockBalance> ShareBalances => _shareBalances;
+
+        // This works for a small set of balances, if hundreds of balances need to be handled it would be best
+        // to handle share balances as separate related aggregates instead of part of the account aggregate
+        private readonly List<StockBalance> _shareBalances;
+
         protected Account() {
+            _shareBalances = new List<StockBalance>();
         }
 
         /// <summary>
@@ -49,6 +63,32 @@ namespace Stocks.Domain.Aggregates.AccountAggregate {
             if (Cash < amount)
                 throw new InsufficientBalanceException();
             Cash -= amount;
+        }
+
+        /// <summary>
+        /// Execute stock order.
+        /// </summary>
+        public Transaction PlaceOrder(DateTime timestamp, Operation operation, string issuer, int shares, int sharePrice) {
+            var transaction = new Transaction(this, timestamp, operation, issuer, shares, sharePrice);
+            var balance = _shareBalances.FirstOrDefault(_ => _.Issuer == issuer);
+
+            if (balance is null) {
+                balance = new StockBalance(this, issuer);
+                _shareBalances.Add(balance);
+            }
+
+            if (operation == Operation.Buy) {
+                balance.AddShares(shares, sharePrice);
+                Deduct(transaction.GetTotalPrice());
+            } else {
+                balance.SubtractShares(transaction.Shares);
+                Deposit(transaction.GetTotalPrice());
+            }
+
+            if (balance.IsEmpty())
+                _shareBalances.Remove(balance);
+
+            return transaction;
         }
     }
 }

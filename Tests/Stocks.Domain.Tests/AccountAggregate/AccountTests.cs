@@ -1,6 +1,9 @@
 ﻿using NUnit.Framework;
 using Stocks.Domain.Aggregates.AccountAggregate;
+using Stocks.Domain.Aggregates.TransactionAggregate;
 using Stocks.Domain.Exceptions;
+using Stocks.Domain.Tests.TransactionAggregate;
+using System.Linq;
 
 namespace Stocks.Domain.Tests.AccountAggregate {
 
@@ -77,6 +80,76 @@ namespace Stocks.Domain.Tests.AccountAggregate {
 
             // Act/Assert
             Assert.Throws<InsufficientBalanceException>(deduct);
+        }
+
+        [Test]
+        public void PlaceOrderAddsNewBalanceOnFirstTimeBuying() {
+            const string issuer = "NTFX";
+            const int shares = 10;
+            const int sharePrice = 10;
+
+            // Arrange
+            var account = new Account(100);
+
+            // Act
+            account.PlaceOrder(TransactionTests.ValidTransactionTime, Operation.Buy, issuer, shares, sharePrice);
+
+            // Assert
+            var balance = account.ShareBalances.FirstOrDefault(_ => _.Issuer == issuer);
+            Assert.NotNull(balance);
+            Assert.AreEqual(shares, balance.Shares);
+            Assert.AreEqual(sharePrice, balance.SharePrice);
+        }
+
+        [Test]
+        public void PlaceOrderRemovesEmptyBalanceAfterSelling() {
+            const string issuer = "NTFX";
+            const int shares = 10;
+            const int sharePrice = 10;
+
+            // Arrange
+            var account = new Account(100);
+
+            // Act
+            account.PlaceOrder(TransactionTests.ValidTransactionTime, Operation.Buy, issuer, shares, sharePrice);
+            account.PlaceOrder(TransactionTests.ValidTransactionTime, Operation.Sell, issuer, shares, sharePrice);
+
+            // Assert
+            var balance = account.ShareBalances.FirstOrDefault(_ => _.Issuer == issuer);
+            Assert.Null(balance);
+        }
+
+        [Test]
+        public void PlaceOrderDeductsExpectedAmountWhenBuying() {
+            const string issuer = "NTFX";
+            const int shares = 10;
+            const int sharePrice = 10;
+
+            // Arrange
+            var account = new Account(100);
+
+            // Act
+            account.PlaceOrder(TransactionTests.ValidTransactionTime, Operation.Buy, issuer, shares, sharePrice);
+
+            // Assert
+            Assert.AreEqual(100 - (shares * sharePrice), account.Cash);
+        }
+
+        [Test]
+        public void PlaceOrderIncreasesExpectedAmountWhenSelling() {
+            const string issuer = "NTFX";
+            const int shares = 10;
+            const int sharePrice = 10;
+
+            // Arrange
+            var account = new Account(100);
+
+            // Act
+            account.PlaceOrder(TransactionTests.ValidTransactionTime, Operation.Buy, issuer, shares, sharePrice);
+            account.PlaceOrder(TransactionTests.ValidTransactionTime, Operation.Sell, issuer, shares, sharePrice);
+
+            // Assert
+            Assert.AreEqual(100 - (shares * sharePrice) + (shares * sharePrice), account.Cash);
         }
     }
 }
