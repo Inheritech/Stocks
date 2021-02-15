@@ -122,5 +122,39 @@ namespace Stocks.Domain.Tests.TransactionAggregate {
             Assert.Throws<InvalidTransactionException>(createZero);
             Assert.Throws<InvalidTransactionException>(createNegative);
         }
+
+        public void ConstructorThrowsWhenIssueIsNullOrEmpty() {
+            // Arrange
+            var account = new Account(10);
+            void createNull() => new Transaction(
+                account,
+                _validTransactionTime,
+                Operation.Buy,
+                null,
+                1,
+                1
+            );
+            void createEmpty() => new Transaction(
+                account,
+                _validTransactionTime,
+                Operation.Buy,
+                "",
+                1,
+                1
+            );
+            void createWhitespace() => new Transaction(
+                account,
+                _validTransactionTime,
+                Operation.Buy,
+                "  ",
+                1,
+                1
+            );
+
+            // Act/Assert
+            Assert.Throws<InvalidTransactionException>(createNull);
+            Assert.Throws<InvalidTransactionException>(createEmpty);
+            Assert.Throws<InvalidTransactionException>(createWhitespace);
+        }
     }
 }

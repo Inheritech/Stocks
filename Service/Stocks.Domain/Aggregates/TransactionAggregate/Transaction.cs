@@ -66,6 +66,9 @@ namespace Stocks.Domain.Aggregates.TransactionAggregate {
             if (account == null)
                 throw new InvalidTransactionException("The transaction requires an existing account to be related to.");
             
+            if (string.IsNullOrWhiteSpace(issuer))
+                throw new InvalidTransactionException("The transaction requires a valid non-empty issuer.");
+
             var timestampTime = timestamp.TimeOfDay;
             if (!IsMarketOpen(timestampTime))
                 throw new MarketClosedException();
