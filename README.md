@@ -52,7 +52,7 @@ When opening the application URL you will be redirected to the Swagger UI to eas
 
 ## Running Unit Tests
 
-The project includes unit tests for all domain entities in the Stocks.Domain.Tests project.
+The project includes unit tests for all domain entities in the Stocks.Domain project.
 If making any changes you can run the unit tests through the following command:
 
 ```bash
