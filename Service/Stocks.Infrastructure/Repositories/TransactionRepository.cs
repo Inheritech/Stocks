@@ -23,7 +23,7 @@ namespace Stocks.Infrastructure.Repositories {
                 .Entity;
         }
 
-        public async Task<Transaction> FindDuplicateOnTimeSpan(Transaction like, TimeSpan range) {
+        public async Task<Transaction> FindDuplicateOnTimeSpanAsync(Transaction like, TimeSpan range) {
             return await _context.Transactions
                 .FirstOrDefaultAsync(other =>
                     other.AccountId == like.AccountId

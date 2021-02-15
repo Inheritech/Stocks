@@ -10,6 +10,6 @@ namespace Stocks.Domain.Aggregates.TransactionAggregate {
         /// </summary>
         /// <param name="like">Transaction to compare to.</param>
         /// <param name="range">Time range to search on.</param>
-        Task<Transaction> FindDuplicateOnTimeSpan(Transaction like, TimeSpan range);
+        Task<Transaction> FindDuplicateOnTimeSpanAsync(Transaction like, TimeSpan range);
     }
 }
