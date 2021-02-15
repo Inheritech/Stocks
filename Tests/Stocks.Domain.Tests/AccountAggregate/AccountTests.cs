@@ -120,6 +120,22 @@ namespace Stocks.Domain.Tests.AccountAggregate {
         }
 
         [Test]
+        public void PlaceOrderRemovesEmptyBalanceOnError() {
+            const string issuer = "NTFX";
+            const int shares = 10;
+            const int sharePrice = 10;
+
+            // Arrange
+            var account = new Account(100);
+            void place() => account.PlaceOrder(TransactionTests.ValidTransactionTime, Operation.Sell, issuer, shares, sharePrice);
+
+            // Act/Assert
+            Assert.Throws<InsufficientStockBalanceException>(place);
+            var balance = account.StockBalances.FirstOrDefault(_ => _.Issuer == issuer);
+            Assert.Null(balance);
+        }
+
+        [Test]
         public void PlaceOrderDeductsExpectedAmountWhenBuying() {
             const string issuer = "NTFX";
             const int shares = 10;

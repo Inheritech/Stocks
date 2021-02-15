@@ -74,7 +74,6 @@ namespace Stocks.Domain.Aggregates.AccountAggregate {
 
             if (balance is null) {
                 balance = new StockBalance(this, issuer);
-                _stockBalances.Add(balance);
             }
 
             if (operation == Operation.Buy) {
@@ -84,6 +83,9 @@ namespace Stocks.Domain.Aggregates.AccountAggregate {
                 balance.SubtractShares(transaction.Shares);
                 Deposit(transaction.GetTotalPrice());
             }
+
+            if (!balance.HasIdentity() && !balance.IsEmpty())
+                _stockBalances.Add(balance);
 
             if (balance.IsEmpty())
                 _stockBalances.Remove(balance);
