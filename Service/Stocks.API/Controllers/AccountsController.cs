@@ -29,16 +29,16 @@ namespace Stocks.API.Controllers {
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
         public async Task<ActionResult<AccountViewModel>> CreateAccountAsync([FromBody] CreateAccountViewModel viewModel) {
             _logger.LogDebug(
-                "Processing received request at endpoint {EndpointName}",
+                "Processing request received at endpoint {EndpointName}",
                 nameof(CreateAccountAsync)
             );
             var createAccountCommand = new CreateAccountCommand(viewModel.Cash);
             try {
                 var createdAccountResult = await _mediator.Send(createAccountCommand);
-                var accountVM = new AccountViewModel(createdAccountResult.Id, createdAccountResult.Cash);
+                var accountVM = new IdentifiedAccountViewModel(createdAccountResult.Id, createdAccountResult.Cash);
                 return Ok(accountVM);
             } catch (DomainException domainException) {
-                var errorModel = new ErrorViewModel();
+                var errorModel = new BusinessErrorsViewModel();
                 errorModel.BusinessErrors.Add(domainException.Code);
                 return BadRequest(errorModel);
             } catch (Exception internalError) {
@@ -46,6 +46,5 @@ namespace Stocks.API.Controllers {
                 return StatusCode(500);
             }
         }
-
     }
 }
