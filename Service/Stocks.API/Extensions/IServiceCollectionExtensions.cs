@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Stocks.Domain.Common;
 using System;
 
 namespace Stocks.API.Extensions {
@@ -13,6 +14,19 @@ namespace Stocks.API.Extensions {
                     sqlOpts.EnableRetryOnFailure(maxRetryCount: 15, maxRetryDelay: TimeSpan.FromSeconds(30), errorNumbersToAdd: null);
                 });
             }, ServiceLifetime.Scoped);
+
+            return services;
+        }
+
+        public static IServiceCollection AddDomainRepositories<TDbContext>(this IServiceCollection services)
+            where TDbContext : DbContext {
+
+            services.Scan(scan => {
+                scan.FromAssemblyOf<TDbContext>()
+                .AddClasses(classes => classes.AssignableTo<IRepository>())
+                .AsImplementedInterfaces()
+                .WithScopedLifetime();
+            });
 
             return services;
         }

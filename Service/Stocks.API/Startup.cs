@@ -20,7 +20,8 @@ namespace Stocks.API {
 
             string connectionString = Configuration.GetConnectionString("StocksDb");
 
-            services.AddSqlDatabase<StocksContext>(connectionString, StocksContext.DefaultSchema);
+            services.AddSqlDatabase<StocksContext>(connectionString, StocksContext.DefaultSchema)
+                .AddDomainRepositories<StocksContext>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env) {
