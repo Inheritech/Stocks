@@ -2,6 +2,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Serilog;
+using Stocks.API.Extensions;
+using Stocks.Infrastructure;
 using System;
 using System.IO;
 using System.Threading.Tasks;
@@ -20,6 +22,9 @@ namespace Stocks.API {
             try {
                 Log.Information("Configuring Stocks API host...");
                 var host = CreateHostBuilder(args).Build();
+
+                Log.Information("Applying migrations...");
+                host.MigrateDbContext<StocksContext>();
 
                 Log.Information("Starting Stocks API host...");
                 await host.RunAsync();
