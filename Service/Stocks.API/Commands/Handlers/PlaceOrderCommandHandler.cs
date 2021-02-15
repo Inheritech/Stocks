@@ -41,7 +41,7 @@ namespace Stocks.API.Commands.Handlers {
                     request.SharePrice
                 );
 
-                var duplicateTransaction = _transactions.FindDuplicateOnTimeSpan(transaction, TimeSpan.FromMinutes(5));
+                var duplicateTransaction = await _transactions.FindDuplicateOnTimeSpanAsync(transaction, TimeSpan.FromMinutes(5));
                 if (duplicateTransaction != null)
                     throw new DuplicateTransactionException();
 
