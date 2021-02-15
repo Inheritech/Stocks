@@ -24,8 +24,15 @@ namespace Stocks.Infrastructure.Repositories {
         }
 
         public async Task<Account> FindAsync(int id) {
-            return await _context.Accounts
+            var account = await _context.Accounts
                 .SingleOrDefaultAsync(_ => _.Id == id);
+
+            if (account != null) {
+                await _context.Entry(account)
+                    .Collection(_ => _.StockBalances).LoadAsync();
+            }
+
+            return account;
         }
 
         public Account Update(Account account) {
