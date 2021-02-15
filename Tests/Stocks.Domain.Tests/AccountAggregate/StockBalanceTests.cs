@@ -102,16 +102,20 @@ namespace Stocks.Domain.Tests.AccountAggregate {
             var account = new Account(10);
             var shareBalance1 = new StockBalance(account, "NTFX");
             var shareBalance2 = new StockBalance(account, "ADA");
+            var shareBalance3 = new StockBalance(account, "GME");
 
             // Act
             shareBalance1.AddShares(10, 10);
             shareBalance1.AddShares(5, 7);
             shareBalance2.AddShares(2, 15.5m);
             shareBalance2.AddShares(1, 5);
+            shareBalance3.AddShares(2, 2.56m);
+            shareBalance3.AddShares(3, 4.23m);
 
             // Assert
             Assert.AreEqual(9, shareBalance1.SharePrice);
             Assert.AreEqual(12, shareBalance2.SharePrice);
+            Assert.AreEqual(3.562m, shareBalance3.SharePrice);
         }
 
         [Test]
