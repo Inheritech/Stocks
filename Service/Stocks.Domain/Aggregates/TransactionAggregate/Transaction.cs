@@ -38,7 +38,7 @@ namespace Stocks.Domain.Aggregates.TransactionAggregate {
         /// <summary>
         /// Price of each share at the <see cref="Timestamp"/> of the transaction.
         /// </summary>
-        public int SharePrice { get; protected set; }
+        public decimal SharePrice { get; protected set; }
 
         /// <summary>
         /// Create a new transaction for the provided account.
@@ -54,7 +54,7 @@ namespace Stocks.Domain.Aggregates.TransactionAggregate {
             Operation operation,
             string issuer,
             int shares,
-            int sharePrice
+            decimal sharePrice
         ) {
             static bool IsMarketOpen(TimeSpan time) {
                 TimeSpan marketOpens = new TimeSpan(6, 0, 0);
@@ -91,6 +91,6 @@ namespace Stocks.Domain.Aggregates.TransactionAggregate {
         /// <summary>
         /// Get the total price of this transaction.
         /// </summary>
-        public int GetTotalPrice() => Shares * SharePrice;
+        public decimal GetTotalPrice() => Shares * SharePrice;
     }
 }
