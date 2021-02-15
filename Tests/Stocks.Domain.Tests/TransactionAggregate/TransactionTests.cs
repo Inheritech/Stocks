@@ -123,7 +123,7 @@ namespace Stocks.Domain.Tests.TransactionAggregate {
             Assert.Throws<InvalidTransactionException>(createNegative);
         }
 
-        public void ConstructorThrowsWhenIssueIsNullOrEmpty() {
+        public void ConstructorThrowsWhenIssueIsNullOrWhitespace() {
             // Arrange
             var account = new Account(10);
             void createNull() => new Transaction(
