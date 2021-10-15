@@ -2,7 +2,11 @@
 using System.Text.Json.Serialization;
 
 namespace Stocks.API.ViewModels {
-    public class PlaceOrderViewModel {
+
+    /// <summary>
+    /// Request data for placing a stocks order
+    /// </summary>
+    public class PlaceOrderRequest {
 
         /// <summary>
         /// Epoch at which the order was placed

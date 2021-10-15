@@ -4,9 +4,9 @@ using System.Text.Json.Serialization;
 namespace Stocks.API.ViewModels {
 
     /// <summary>
-    /// View model for account creation requests.
+    /// Request data for creating an account
     /// </summary>
-    public class CreateAccountViewModel {
+    public class CreateAccountRequest {
 
         [JsonPropertyName("cash")]
         [JsonProperty("cash")]

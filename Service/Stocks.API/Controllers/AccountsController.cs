@@ -29,7 +29,7 @@ namespace Stocks.API.Controllers {
         [HttpPost]
         [ProducesResponseType((int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
-        public async Task<ActionResult<AccountViewModel>> CreateAccountAsync([FromBody] CreateAccountViewModel viewModel) {
+        public async Task<ActionResult<AccountViewModel>> CreateAccountAsync([FromBody] CreateAccountRequest viewModel) {
             _logger.LogDebug(
                 "Processing request received at endpoint {EndpointName}",
                 nameof(CreateAccountAsync)
@@ -55,7 +55,7 @@ namespace Stocks.API.Controllers {
         [HttpPost("{id}/orders")]
         [ProducesResponseType((int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
-        public async Task<ActionResult<OrderResultViewModel>> PlaceOrderAsync([FromRoute] int id, [FromBody] PlaceOrderViewModel viewModel) {
+        public async Task<ActionResult<OrderResultViewModel>> PlaceOrderAsync([FromRoute] int id, [FromBody] PlaceOrderRequest viewModel) {
             _logger.LogDebug(
                 "Processing request received at endpoint {EndpointName}",
                 nameof(PlaceOrderAsync)
