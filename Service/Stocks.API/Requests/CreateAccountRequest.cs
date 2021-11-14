@@ -1,5 +1,4 @@
-﻿using Newtonsoft.Json;
-using System.Text.Json.Serialization;
+﻿using System.Text.Json.Serialization;
 
 namespace Stocks.API.ViewModels {
 
@@ -9,7 +8,6 @@ namespace Stocks.API.ViewModels {
     public class CreateAccountRequest {
 
         [JsonPropertyName("cash")]
-        [JsonProperty("cash")]
         public decimal Cash { get; set; }
     }
 }

@@ -1,5 +1,4 @@
-﻿using Newtonsoft.Json;
-using System.Text.Json.Serialization;
+﻿using System.Text.Json.Serialization;
 
 namespace Stocks.API.ViewModels {
 
@@ -12,7 +11,6 @@ namespace Stocks.API.ViewModels {
         /// General information on the account related to an order
         /// </summary>
         [JsonPropertyName("current_balance")]
-        [JsonProperty("current_balance")]
         public AccountViewModel AccountOverview {get; set;}
 
         public OrderResultViewModel() : base() {
