@@ -1,6 +1,14 @@
 # Stocks.API
 
-This project is a simple stocks API that allows creating an account, and mocks buying and selling any kind of stock.
+This project is a simple mock stocks API that allows creating an account, and buying and selling any kind of stock by name.
+
+The domain is very simple and this does not implement a reallistic model of stock handling, this is just used for representing fake stocks.
+
+The purpose of this project is portraying a sample implementation of my learning on Domain Driven Design, CQRS and containerization mostly, I'll be updating
+this project as I see fit to represent my understanding on best practices and how-to's on implementing maintainable applications since I use this
+repository as reference for new implementations.
+
+Feel free to look around and/or use this as reference for your own projects!
 
 ## How to run
 
