@@ -43,6 +43,8 @@ namespace Stocks.API.Commands.Handlers {
                     request.SharePrice
                 );
 
+                // Sadly we are breaking DDD to make a tradeoff between performance and completeness
+                // More info: https://enterprisecraftsmanship.com/posts/domain-model-purity-lazy-loading/
                 var duplicateTransaction = await _transactions.FindDuplicateOnTimeSpanAsync(transaction, TimeSpan.FromMinutes(5));
                 if (duplicateTransaction != null)
                     throw new DuplicateTransactionException();
